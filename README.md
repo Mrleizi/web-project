@@ -4,19 +4,19 @@
 
 [天天生鲜前台代码地址](/Django-project/fresh_shop)  
 
-​		[运行效果传送门](http://134.175.47.241:8090/home/index/)
+    [运行效果传送门](http://134.175.47.241:8090/home/index/)
 
 [天天生鲜后台代码地址](/Django-project/fresh_shop_back)  
 
-​		[运行效果传送门](http://134.175.47.241:8091/home/login/)
+    [运行效果传送门](http://134.175.47.241:8091/home/login/)
 
 
 
-  Flask是一个基于Python实现的web开发的'微'框架。其 [WSGI](https://baike.baidu.com/item/WSGI) 工具箱采用 Werkzeug ，[模板引擎](https://baike.baidu.com/item/%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E/907667)则使用 Jinja2 ，和Django一样，也是一个基于MVC设计模式的Web框架。Flask有非常好的拓展机制和第三方的拓展环境，工作中常见的软件都有对应的拓展，自己动手实现拓展也很容易；微型框架的形式给了开发者更大的选择空间。
+  Flask是一个基于Python实现的web开发的'微'框架。其 [WSGI](https://baike.baidu.com/item/WSGI) 工具箱采用 Werkzeug ，[模板引擎](https://baike.baidu.com/item/%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E/907667)则使用 Jinja2，和Django一样，也是一个基于MVC设计模式的Web框架。Flask有非常好的拓展机制和第三方的拓展环境，工作中常见的软件都有对应的拓展，自己动手实现拓展也很容易；微型框架的形式给了开发者更大的选择空间。
 
 项目:爱家(Flask实现):
 
 [房源项目代码地址](/Flask-project/aijia)     
 
-​		[运行效果传送门](http://134.175.47.241:8092/house/index/)
+    [运行效果传送门](http://134.175.47.241:8092/house/index/)
 
