@@ -1,0 +1,7 @@
+{% extends 'base_main.html' %}
+
+{% block content %}
+    {% for student in students %}
+        用户名:{{ student.username }}
+    {% endfor %}
+{% endblock %}

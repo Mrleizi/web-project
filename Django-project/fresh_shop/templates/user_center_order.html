@@ -1,0 +1,150 @@
+{% extends 'base_main.html' %}
+{% block title %}
+    天天生鲜-用户中心
+{% endblock %}
+
+{% block css %}
+    {{ block.super }}
+    <style type="text/css">
+        .order_operation:link {
+            color: gray;
+        }
+
+        .order_operation:visited {
+            color: gray;
+        }
+
+        .order_operation:visited {
+            color: red;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+
+    <div class="main_con clearfix">
+        <div class="left_menu_con clearfix">
+            <h3>用户中心</h3>
+            <ul>
+                <li><a href="{% url 'users:user_center_info' %}">· 个人信息</a></li>
+                <li><a href="{% url 'orders:user_center_order' %}" class="active">· 全部订单</a></li>
+                <li><a href="{% url 'users:user_center_site' %}">· 收货地址</a></li>
+            </ul>
+        </div>
+
+
+        <div class="right_content clearfix">
+            {% csrf_token %}
+            <h3 class="common_title2">全部订单</h3>
+
+
+
+            {% for o_info in current_page %}
+                <div id="o_info_{{ o_info.id }}">
+                    <ul class="order_list_th w978 clearfix">
+                        <li class="col01">{{ o_info.add_time|date:'Y-m-d h:m:s' }}</li>
+                        <li class="col02" style="width:400px;">订单号：{{ o_info.order_sn }}</li>
+                        <li class="col02 stress">
+                            {% for status in order_status %}
+                                {% if status.0 == o_info.pay_status %}
+                                    {{ status.1 }}
+                                {% endif %}
+                            {% endfor %}
+                        </li>
+                    </ul>
+
+                    <table class="order_list_table w980">
+                        <tbody>
+                        <tr>
+                            <td width="55%">
+                                {% for order_goods in o_info.goods.all %}
+                                    <ul class="order_goods_list clearfix">
+                                        <li class="col01"><img src="/media/{{ order_goods.goods.goods_front_image }}">
+                                        </li>
+                                        <li class="col02">{{ order_goods.goods.name }}<em>{{ order_goods.goods.shop_price }}元/500g</em>
+                                        </li>
+                                        <li class="col03">{{ order_goods.goods_nums }}</li>
+                                        <li class="col04">{{ order_goods.goods.shop_price }}元</li>
+                                    </ul>
+                                {% endfor %}
+                            </td>
+
+                            <td width="15%">{{ o_info.order_mount }}元</td>
+                            <td width="10%">
+                                {% for status in order_status %}
+                                    {% if status.0 == o_info.pay_status %}
+                                        {{ status.1 }}
+                                    {% endif %}
+                                {% endfor %}
+                            </td>
+
+                            <td width="10%">
+                                <a href="#" class="oper_btn" class="order_operation">
+                                    {% if o_info.pay_status == 'paying' %}
+                                        <a href="#">去付款</a>
+                                    {% endif %}
+                                    {% if o_info.pay_status == 'TRADE_SUCCESS' %}
+                                        查看物流
+                                    {% endif %}
+                                </a>
+                            </td>
+                            <td width="10%">
+                                <a href="javascript:;" class="order_operation"
+                                   onclick="delete_order({{ o_info.id }})">删除</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            {% endfor %}
+
+            <script>
+
+                {#alert($('.order_list_th'));#}
+
+                function delete_order(order_info_id) {
+                    var csrf = $('input[name="csrfmiddlewaretoken"]').val();
+                    $.ajax({
+                        url: '/orders/delete_order_info/',
+                        data: {'order_info_id': order_info_id},
+                        type: 'POST',
+                        dataType: 'json',
+                        async: false,
+                        headers: {'X-CSRFToken': csrf},
+                        success: function (data) {
+                            if (document.getElementsByClassName('order_list_th').length >= 2) {
+                                $('#o_info_' + order_info_id).remove()
+                            }
+                            else {
+                                window.location.href = '/orders/user_center_order'
+                            }
+
+                        },
+                        error: function (data) {
+                            alert('订单删除请求失败')
+                        }
+                    });
+                }
+
+            </script>
+
+
+            <div class="pagenation">
+                {% if current_page.has_previous %}
+                    <a href="{% url 'orders:user_center_order' %}?page={{ page.previous_page_number }}">上一页</a>
+                {% endif %}
+
+                {% for i in current_page.paginator.page_range %}
+                    <a href="{% url 'orders:user_center_order' %}?page={{ i }}">{{ i }}</a>
+                {% endfor %}
+
+                {% if current_page.has_next %}
+                    <a href="{% url 'orders:user_center_order' %}?page={{ page.next_page_number }}">下一页></a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}

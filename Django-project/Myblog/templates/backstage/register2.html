@@ -1,0 +1,27 @@
+{% extends 'backstage/base.html' %}
+
+{% block title %}
+    注册
+{% endblock %}
+
+{% block content %}
+    <form action="" method="post" enctype="multipart/form-data">
+        姓名:<input type="text" name="name" id="name">
+        <span class="spanname"></span>
+        <br><br>
+        电话:<input type="text" name="tel" id="tel">
+        <span class="spantel"></span>
+        <br><br>
+        用户名:<input type="text" name="username" id="username">
+        <span class="spanusername"></span>
+        <br><br>
+        密码:<input type="password" name="password" id="password">
+        <span class="spanpassword"></span>
+        <br><br>
+        确认密码:<input type="password" name="password2" id="password2">
+        <span class="spanpassword2"></span>
+        <br><br>
+        <input type="submit" value="注册">
+    </form>
+{% endblock %}
+

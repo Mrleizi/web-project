@@ -1,0 +1,141 @@
+{% extends 'base_main.html' %}
+{% block title %}
+    天天生鲜-用户中心
+{% endblock %}
+
+{% block css %}
+    {{ block.super }}
+    <style type="text/css">
+        .address_delete:link {
+            color: gray;
+        }
+
+        .address_delete:visited {
+            color: gray;
+        }
+
+        .address_delete:hover {
+            color: red;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+
+    <div class="main_con clearfix">
+        <div class="left_menu_con clearfix">
+            <h3>用户中心</h3>
+            <ul>
+                <li><a href="{% url 'users:user_center_info' %}">· 个人信息</a></li>
+                <li><a href="{% url 'orders:user_center_order' %}">· 全部订单</a></li>
+                <li><a href="{% url 'users:user_center_site' %}" class="active">· 收货地址</a></li>
+            </ul>
+        </div>
+        <div class="right_content clearfix">
+            <h3 class="common_title2">收货地址</h3>
+            <div class="site_con">
+                <dl>
+                    {# <dt>当前地址：</dt>#}
+                    <dt>地址管理：</dt>
+                    {% for user_address in user_addresses %}
+                        <dd id="delete_adress_{{ user_address.id }}">
+                            {{ user_address.address }}
+                            （{{ user_address.signer_name }} 收）
+                            {{ user_address.signer_mobile }}
+                            <br>
+                            <span style="padding-left: 3%">
+                                <input type="radio" name="chose_order_site"
+                                       id="set_default_adress_{{ user_address.id }}"
+                                       {% if user_address.is_default_address %}checked{% endif %}
+                                       onclick="set_default_adress({{ user_address.id }})">
+                                <span id="address_{{ user_address.id }}" class="will_set"><span>设为默认</span></span>
+                            </span>
+                            <a href="javascript:;" class="address_delete" style="padding-left: 2%"
+                               onclick="delete_user_address({{ user_address.id }})">删除</a>
+                        </dd>
+                    {% endfor %}
+                </dl>
+            </div>
+            <h3 class="common_title2">编辑地址</h3>
+            <div class="site_con">
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <div class="form_group">
+                        <label>收件人：</label>
+                        <input type="text" name="signer_name">
+                        <h6 style="color: red">{{ form.errors.signer_name }}</h6>
+                    </div>
+                    <div class="form_group form_group2">
+                        <label>详细地址：</label>
+                        <textarea class="site_area" name="address" style="display: inline"></textarea>
+                        <h6 style="color: red;">{{ form.errors.address }}</h6>
+                    </div>
+                    <div class="form_group">
+                        <label>邮编：</label>
+                        <input type="text" name="signer_postcode">
+                        <h6 style="color: red">{{ form.errors.signer_postcode }}</h6>
+                    </div>
+                    <div class="form_group">
+                        <label>手机：</label>
+                        <input type="text" name="signer_mobile">
+                        <h6 style="color: red">{{ form.errors.signer_mobile }}</h6>
+                    </div>
+
+                    <input type="submit" name="" value="提交" class="info_submit">
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        {% for user_address in user_addresses %}
+            {% if user_address.is_default_address %}
+                $('#address_{{ user_address.id }}').html('<span style="color:red;">默认地址</span>');
+            {% endif %}
+        {% endfor %}
+
+        function set_default_adress(user_address_id) {
+            var csrf = $('input[name="csrfmiddlewaretoken"]').val();
+            $.ajax({
+                url: '/users/set_default_adress/',
+                data: {'user_address_id': user_address_id},
+                type: 'POST',
+                dataType: 'json',
+                async: false,
+                headers: {'X-CSRFToken': csrf},
+                success: function (data) {
+                    {#alert('默认设置地址请求成功!!!');#}
+                    console.log('设置请求成功!!!');
+
+                    $('.will_set').html('<span>设为默认</span>');
+                    $('#address_' + user_address_id).html('<span style="color:red;">默认地址</span>');
+                },
+                error: function (data) {
+                    alert('设置默认地址请求失败')
+                }
+            });
+        }
+
+        function delete_user_address(user_address_id) {
+            var csrf = $('input[name="csrfmiddlewaretoken"]').val();
+            $.ajax({
+                url: '/users/delete_user_address/',
+                data: {'user_address_id': user_address_id},
+                type: 'POST',
+                dataType: 'json',
+                async: false,
+                headers: {'X-CSRFToken': csrf},
+                success: function (data) {
+                    {#alert('删除地址请求成功!!!');#}
+                    $('#delete_adress_' + user_address_id).remove();
+                    {#console.log('删除地址请求成功!!!')#}
+                },
+                error: function (data) {
+                    alert('删除地址请求失败')
+                }
+            });
+        }
+    </script>
+
+{% endblock %}

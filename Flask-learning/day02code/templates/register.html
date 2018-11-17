@@ -1,0 +1,14 @@
+{% extends 'base_main.html' %}
+
+{% block content %}
+    <form action="" method="post">
+        用户名: <input type="text" name="username">
+        <p style="display: inline;color: red">{{ msg }}</p>
+        <br>
+        密&emsp;码: <input type="password" name="password">
+        <br>
+        <p style="display: inline;color: red">{{ requered }}</p>
+        <br>
+        <input type="submit" value="注册">
+    </form>
+{% endblock %}

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    {% block extMeta %}
+        <meta charset="UTF-8">
+    {% endblock %}
+    <title>
+        {% block title %}
+        {% endblock %}
+    </title>
+
+    {% block extCss %}
+    {% endblock %}
+
+    {% block extJs %}
+    {% endblock %}
+</head>
+<body class="user-select">
+{% block content %}
+{% endblock %}
+
+{% block extJs2 %}
+{% endblock %}
+</body>
+</html>
+{% block extJs3 %}
+{% endblock %}

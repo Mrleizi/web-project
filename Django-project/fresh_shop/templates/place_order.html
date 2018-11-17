@@ -1,0 +1,141 @@
+{% extends 'base_main.html' %}
+
+{% block title %}
+    天天生鲜-提交订单
+{% endblock %}
+
+{% block content %}l
+    <h3 class="common_title">确认收货地址</h3>
+
+    <div class="common_list_con clearfix">
+        <dl>
+            <dt>寄送到：</dt>
+            <img src="/static/images/3306.png" alt="">
+            {% if address %}
+                <dd id="edit_address" style="display: inline-block">
+                    {{ address.address }}（{{ address.signer_name }} 收） {{ address.signer_mobile }}
+                </dd>
+            {% endif %}
+
+        </dl>
+        <a href="{% url 'users:user_center_site' %}" class="edit_site">编辑收货地址</a>
+
+    </div>
+
+    <h3 class="common_title">支付方式</h3>
+    <div class="common_list_con clearfix">
+        <div class="pay_style_con clearfix">
+            <input type="radio" name="pay_style" checked>
+            <label class="cash">货到付款</label>
+            <input type="radio" name="pay_style">
+            <label class="weixin">微信支付</label>
+            <input type="radio" name="pay_style">
+            <label class="zhifubao"></label>
+            <input type="radio" name="pay_style">
+            <label class="bank">银行卡支付</label>
+        </div>
+    </div>
+
+    <h3 class="common_title">商品列表</h3>
+
+    <div class="common_list_con clearfix">
+        <ul class="goods_list_th clearfix">
+            <li class="col01">商品名称</li>
+            <li class="col02">商品单位</li>
+            <li class="col03">商品价格</li>
+            <li class="col04">数量</li>
+            <li class="col05">小计</li>
+        </ul>
+
+        {% for cart in cart_goods %}
+            {% if cart.is_select %}
+                <ul class="goods_list_td clearfix">
+                    <li class="col01">{{ goods.id }}</li>
+                    <li class="col02"><img src="/media/{{ cart.goods.goods_front_image }}"></li>
+                    <li class="col03">{{ cart.goods.name }}</li>
+                    <li class="col04">500g</li>
+                    <li class="col05">{{ cart.goods.shop_price }}元</li>
+                    <li class="col06">{{ cart.nums }}</li>
+                    <li class="col07">{{ cart.total_price }}元</li>
+                </ul>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <h3 class="common_title">总金额结算</h3>
+    <div class="common_list_con clearfix">
+        <div class="settle_con">
+            <div class="total_goods_count">共<em></em>件商品，总金额<b></b></div>
+            <div class="transit">运费：<b>10.5元</b></div>
+            <div class="total_pay">实付款：<b></b></div>
+        </div>
+    </div>
+
+    <div class="order_submit clearfix">
+        <a href="javascript:;" id="order_btn">提交订单</a>
+    </div>
+
+
+    <div class="popup_con">
+        <div class="popup">
+            <p>订单提交成功！</p>
+        </div>
+
+        <div class="mask"></div>
+    </div>
+    {% csrf_token %}
+    {#    <script type="text/javascript" src="/static/js/jquery-1.12.4.min.js"></script>#}
+    <script type="text/javascript">
+
+        $.get('/orders/get_order_message', function (data) {
+            if (data.code == '200') {
+                $('.total_goods_count em').html(data.order_message.order_goods_count);
+                $('.total_goods_count b').html(data.order_message.order_pay + '元');
+                var transit = parseFloat($('.transit b').html());
+                $('.total_pay b').html(parseFloat($('.total_goods_count b').html()) + transit + '元')
+            }
+        });
+
+
+        $('#order_btn').click(function () {
+
+            <!--验证用户是否选择了收货地址-->
+            {#var address = $('#edit_address').html().length;#}
+            {#var address = Boolean($('#edit_address').html());#}
+
+            {#alert(address);#}
+            if (document.getElementById('edit_address')) {
+                localStorage.setItem('order_finish', 2);
+
+                $('.popup_con').fadeIn('fast', function () {
+
+                    setTimeout(function () {
+                        $('.popup_con').fadeOut('fast', function () {
+                            window.location.href = '/home/index/';
+                        });
+                    }, 3000)
+                });
+
+                {#提交订单#}
+                var csrf = $('input[name="csrfmiddlewaretoken"]').val();
+                $.ajax({
+                    url: '/orders/order/',
+                    type: 'POST',
+                    dataType: 'json',
+                    headers: {'X-CSRFToken': csrf},
+                    success: function (data) {
+                        {#alert('ajax请求成功' + data.msg);#}
+                        console.log(data.msg)
+                    },
+                    error: function (data) {
+                        alert('ajax请求失败' + data.msg)
+                    }
+                });
+            }
+            else {
+                alert('请选择收货人地址信息')
+            }
+        });
+    </script>
+
+{% endblock %}
