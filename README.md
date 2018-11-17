@@ -2,9 +2,13 @@
 
 项目:天天生鲜(Django实现):
 
-[天天生鲜前台代码地址](/Django-project/fresh_shop)  [运行效果传送门](http://134.175.47.241:8090/home/index/)
+[天天生鲜前台代码地址](/Django-project/fresh_shop)  
 
-[天天生鲜后台代码地址](/Django-project/fresh_shop_back)  [运行效果传送门](http://134.175.47.241:8091/home/login/)
+​		[运行效果传送门](http://134.175.47.241:8090/home/index/)
+
+[天天生鲜后台代码地址](/Django-project/fresh_shop_back)  
+
+​		[运行效果传送门](http://134.175.47.241:8091/home/login/)
 
 
 
@@ -12,5 +16,7 @@
 
 项目:爱家(Flask实现):
 
-[房源项目代码地址](/Flask-project/aijia)     [运行效果传送门](http://134.175.47.241:8092/house/index/)
+[房源项目代码地址](/Flask-project/aijia)     
+
+​		[运行效果传送门](http://134.175.47.241:8092/house/index/)
 
