@@ -1,0 +1,80 @@
+{% extends 'index.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% block css %}
+        <link rel="stylesheet" href="{% static 'css/base.css' %}"/>
+        <link rel="stylesheet" href="{% static 'css/header.css' %}"/>
+        <link rel="stylesheet" href="{% static 'css/footer.css' %}"/>
+        <link rel="stylesheet" href="{% static 'css/list.css' %}">
+    {% endblock %}
+</head>
+<body>
+{% block container %}
+    {% block buy %}
+        <div class="container">
+            <div class="f1-left">
+                <b><a href="">我要买车</a></b>
+                <ul>
+                    {% for car in carlist.brandlist %}
+                        <a href="">
+                            <li>
+                                <img src="{% static 'img/car.png' %}" alt=""/>{{ car.btitle }}
+                            </li>
+                        </a>
+                    {% endfor %}
+
+                    <a href="{% url 'car:price0_10' %}">
+                        <li>
+                            <img src="{% static 'img/anquan.png' %}" alt=""/>0-10W
+                        </li>
+                    </a>
+                    <a href="{% url 'car:price10_30' %}">
+                        <li>
+                            <img src="{% static 'img/anquan.png' %}" alt=""/>10W-30W
+                        </li>
+                    </a>
+                    <a href="{% url 'car:price30_80' %}">
+                        <li>
+                            <img src="{% static 'img/anquan.png' %}" alt=""/>30W-80W
+                        </li>
+                    </a>
+                    <a href="{% url 'car:price80_' %}">
+                        <li>
+                            <img src="{% static 'img/anquan.png' %}" alt=""/>80W+
+                        </li>
+                    </a>
+                </ul>
+            </div>
+        </div>
+    {% endblock %}
+    {% block car-list %}
+        <div class="f2 container">
+            <p>
+                <a href=""><b>热卖</b></a>
+            </p>
+
+            <div>
+                {% for car in cars %}
+                    <div>
+                        <img src="/media/{{ car.picture }}" alt="">
+                        <p>
+                            <span>{{ car.carbrand.btitle }}&nbsp;&nbsp;{{ car.model }}<i>{{ car.mileage }}公里/万</i></span><br>
+                            <em><span>{{ car.price }}</span>万元</em>
+                            <s>新车指导价：{{ car.newprice }}万</s>
+                            <a href="{% url 'car:detail' car.id %}">查看</a>
+                        </p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+    {% endblock %}
+{% endblock %}
+
+
+</body>
+</html>

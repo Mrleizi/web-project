@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    {% load static %}
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title></title>
+
+
+    <link rel="stylesheet" href="{% static 'css/base.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}"/>
+</head>
+<body>
+<div id="login">
+    <img src="{% static 'img/timg.jfif' %}" alt=""/>
+    <form action="" method="post">
+        {% csrf_token %}
+        <p>
+            <b>用户注册</b> <b class="prompt">注册失败！</b>
+        </p>
+        <p>
+            用户名：<input type="text" name="username" id="username" placeholder="请输入用户名"
+                {% if cellphone %} value="{{ cellphone }}" {% endif %}/>{{ form.errors.username }}
+        </p>
+        <p>
+            密码：<input type="password" name="userpwd" id="userpwd" placeholder="请输入密码"/>
+        </p>
+        <p>
+            确认密码：<input type="password" name="reuserpwd" id="reuserpwd" placeholder="请确认密码"/>{{ form.errors.reuserpwd }}
+        </p>
+        <p class="register-button">
+            <button class="toLogin" name='tologin' style="margin-right: 270px;color: white" type="submit">注册用户</button>
+
+            <button class="toLogin" name='toregister' style="margin-right: 180px" type="button">直接登录
+                {#                <a href="" style="color: white">直接登录</a>#}
+            </button>
+
+            <button class="buy" name='tobuy' style="margin-right: 90px" type="button">我要买车
+                {#                <a href="" style="color: white">我要买车</a>#}
+            </button>
+
+            <button class="sell" name='tosale' id="tosale" type="button">我要卖车
+                {#                <a href="" style="color: white">我要卖车</a>#}
+            </button>
+        </p>
+    </form>
+
+</div>
+<script src="{% static 'js/jquery-3.2.0.js' %}"></script>
+<script src="{% static 'js/header.js' %}"></script>
+<script src="{% static 'js/jquery.cookie.js' %}"></script>
+<script>
+    $(".toLogin").on("click", function () {
+        $(location).attr("href", "{% url 'user:login' %}")
+    })
+</script>
+</body>
+</html>

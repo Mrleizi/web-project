@@ -1,0 +1,35 @@
+{% extends 'index.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title></title>
+    {% block css %}
+        <link rel="stylesheet" href="{% static 'css/base.css' %}"/>
+        <link rel="stylesheet" href="{% static 'css/header.css' %}"/>
+        <link rel="stylesheet" href="{% static 'css/footer.css' %}"/>
+        <link rel="stylesheet" href="{% static 'css/detail.css' %}">
+    {% endblock %}
+
+</head>
+<body>
+{% block sub-banner %}
+{% endblock %}
+{% block container %}
+    <div class="container">
+        <div style="text-align: center;">
+            <img src="/media/{{ car.picture }}" width="800" height="500" alt="">
+        </div>
+        <div class="f2">dd
+            <p>
+                <span>{{ car.carbrand.btitle }}&nbsp;&nbsp;&nbsp;{{ car.model }}<i>{{ car.mileage }}公里/万</i></span><br>
+                <em>价格：<span>{{ car.price }}</span>万元</em>
+                <s>新车指导价：{{ car.newprice }}万</s>
+                <a href="{% url 'order:create_order' car.id %}">我要购买</a>
+            </p>
+        </div>
+    </div>
+{% endblock %}
+</body>
+</html>

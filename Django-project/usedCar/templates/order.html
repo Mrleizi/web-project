@@ -1,0 +1,69 @@
+{% extends 'index.html' %}
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    {% load static %}
+    <meta charset="UTF-8">
+    <title></title>
+    {% block css %}
+        <link rel="stylesheet" href="{% static 'css/base.css' %}"/>
+        <link rel="stylesheet" href="{% static 'css/header.css' %}"/>
+        <link rel="stylesheet" href="{% static 'css/footer.css' %}"/>
+        <link rel="stylesheet" href="{% static 'css/index.css' %}"/>
+        <link rel="stylesheet" href="{% static 'css/order.css' %}"/>
+    {% endblock %}
+</head>
+<body>
+{% block sub-banner %}{% endblock %}
+{% block container %}
+    <div id="main" class="container">
+        <div class="contain">
+            <div style="display:block">
+                <ul>
+                    <br><br>
+                    <li>
+                        <span>
+                            <i>状态：<span>{{ order.get_orderStatus_display }}</span></i>
+                        </span>
+                        <p>
+                            <img src="/media/{{ order.car.picture }}"/>
+                            <em>
+                                <b>{{ order.car.carbrand.btitle }}</b><br/>
+                                <span>价格：<strong>{{ order.car.price }}</strong>万</span><br/>
+                                <span>行驶里程：{{ order.car.mileage }}公里/万</span><br/>
+                                <span>新车报价：<strong>{{ order.car.newprice }}</strong>万</span>
+                            </em>
+                            {% if order.orderStatus == 1 %}
+                                <small>
+                                    <a href="{% url 'order:cancel_order' order.id %}">
+                                        <button class="closeOrder">取消订单</button>
+                                        <br/></a>
+                                    <a href="{% url 'order:ensure_order' order.id %}">
+                                        <button class="resetOrder">确认购买</button>
+                                    </a>
+                                </small>
+                            {% endif %}
+                        </p>
+                    </li>
+                    <br><br>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'js/jquery-3.2.0.js' %}"></script>
+    <script src="{% static 'js/footer.js' %}"></script>
+    <script src="{% static 'js/header.js' %}"></script>
+{% endblock %}
+<script>
+    $(function () {
+        $(".right").on("click", "li", function () {
+            var index = $(this).index();
+            $(".info-detail").children(`:eq(${index})`).show().siblings().hide();
+        })
+    })
+</script>
+</body>
+</html>

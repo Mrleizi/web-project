@@ -133,7 +133,7 @@ STATICFILES_DIRS = [
 ]
 
 # 没有登录，则跳转到登录
-LOGIN_URL = '/user/login/'  # 访问的相对路径
+# LOGIN_URL = '/user/login/'  # 访问的相对路径
 
 # 设置media文件路径
 MEDIA_URL = '/media/'  # 访问的相对路径
