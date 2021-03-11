@@ -2,9 +2,9 @@
 
 项目:天天生鲜(Django实现):
 
-[天天生鲜前台代码地址](/Django-project/fresh_shop) 
+[水果网前台代码地址](/Django-project/fresh_shop) 
 
-[天天生鲜后台代码地址](/Django-project/fresh_shop_back)  
+[水果网后台代码地址](/Django-project/fresh_shop_back)  
 
 [个人博客后台管理代码地址](Django-project/myblog_back)
 
